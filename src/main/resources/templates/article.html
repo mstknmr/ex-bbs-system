@@ -2,37 +2,61 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Insert title here</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 
 <body>
-  <h1>掲示板アプリケーション</h1>
-  <form  action="article.html" th:action="@{/articles/post-article}" method="post" th:object=${articleForm}>
-    投稿者名：<input type="text" name="name" th:field="*{name}"> <br>
-    投稿内容：<input type="text" name="content" th:field="*{content}"> <br>
-    <input type="submit"  value="記事投稿">
-  </form>
+	<h1>掲示板アプリケーション</h1>
+  
+   <form  action="article.html" th:action="@{/articles/insertArticle}" method="post" >
+       投稿者名：<input type="text" name="name" > <br>
+       投稿内容：<input type="text" name="content"> <br>
+       <input type="submit"  value="記事投稿">
+     </form>
+     
+  <div th:each="article:${articleList}">
   <hr>
-  <span th:each="article:${articleList}">
-    投稿ID:<span th:text="article.id">投稿ID</span><br>
-    投稿者名:<span th:text="article.name">投稿者名</span><br>
-    投稿内容:<span th:text="article.content">投稿内容</span> <br>
+    <table>
+      <tr>
+        <td>投稿ID</td>
+        <td th:text="${article.id}"></td>
+      </tr>
+      <tr>
+        <td>投稿者名</td>
+        <td th:text="${article.name}"></td>
+      </tr>
+      <tr>
+        <td>投稿内容</td>
+        <td th:text="${article.content}"></td>
+      </tr>
+    </table>
     <br>
-    <span th:each="comment:${article.commentList}">
-      コメントID:<span th:text="comment.id">コメントID</span> <br>
-      コメント者名:<span th:text="comment.name">コメント者名</span> <br>
-      コメント内容:<span th:text="comment.content">コメント内容</span> <br>
-    </span>
+    <table th:each="comment:${article.commentList}">
+      <tr>
+        <td>コメントID</td>
+        <td th:text="${comment.id}"></td>
+      </tr>
+      <tr>
+        <td>コメント者名</td>
+        <td th:text="${comment.name}"></td>
+      </tr>
+      <tr>
+        <td>コメント内容</td>
+        <td th:text="${comment.content}"></td>
+      </tr>
+    </table>
     <br>
-    <form  action="article.html" th:action="@{/articles/post-comment}" method="post" th:object=${commentForm}>
-      投稿者名：<input type="text" name="name" th:field="*{name}"> <br>
-      投稿内容：<input type="text" name="content" th:field="*{content}"> <br>
-      <input type="hidden" name="articleId" th:field=*{articleId} th:value="article.id"> <br>
-      <input type="submit"  value="記事投稿">
+     <form  action="index.html" th:action="@{/article/insertComment}"method="post">
+     コメント者名：<input type="text" name="name" > <br>
+     コメント内容：<input type="text" name="content"> <br>
+      <input type="hidden" name="articleId" value="" th:value="${article.id}">
+			<input type="submit"  value="コメント投稿">
     </form>
-    <hr>
-  </span>
+
+<hr>
+  </div>
+
 
 </body>
 
