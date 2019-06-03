@@ -3,7 +3,7 @@ package com.example.domain;
 import java.util.List;
 
 /**
- * Articleのドメイン.
+ * 記事を表すドメイン.
  * 
  * @author knmrmst
  *

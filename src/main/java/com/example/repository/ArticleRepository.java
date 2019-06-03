@@ -55,5 +55,12 @@ public class ArticleRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", article.getName()).addValue("content",article.getContent());
 		template.update(insertArticleSql, param);
 	}
+	
+	public void deleteById(Integer id) {
+		System.out.println("delteByIdが呼び出されました");
+		String deleteByIdSql="DELETE FROM articles WHERE id=:id;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		template.update(deleteByIdSql, param);
+	}
 
 }

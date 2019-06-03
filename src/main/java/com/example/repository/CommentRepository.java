@@ -42,7 +42,7 @@ public class CommentRepository {
 	 * @return コメント情報のリスト
 	 */
 	public List<Comment> findByArticleId(Integer articleId){
-		String findByArticleIdSql = "SELECT id,name,content,article_id FROM comments WHERE article_id = :id;";
+		String findByArticleIdSql = "SELECT id,name,content,article_id FROM comments WHERE article_id = :id order BY id desc;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id",articleId);
 		List<Comment> commentList = template.query(findByArticleIdSql, param,COMMENT_ROW_MAPPER);
 		return commentList;
@@ -58,5 +58,18 @@ public class CommentRepository {
 		String insertCommentSql = "INSERT INTO comments(name,content,article_id)VALUES(:name,:content,:articleId);";
 		
 		template.update(insertCommentSql, param);
+	}
+	
+	/**
+	 * 記事IDに一致するコメントの削除.
+	 * 
+	 * @param articleId
+	 */
+	public void deleteByArticleId(Integer articleId) {
+		System.out.println("deleteByArticleIdが呼び出されました");
+		String deleteByArticleIdSql="DELETE FROM comments WHERE article_id=:articleId;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("articleId", articleId);
+		template.update(deleteByArticleIdSql, param);
+		
 	}
 }

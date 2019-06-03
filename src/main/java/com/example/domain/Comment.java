@@ -1,7 +1,7 @@
 package com.example.domain;
 
 /**
- * Commentのドメイン.
+ * コメントを表すドメイン.
  * 
  * @author knmrmst
  *

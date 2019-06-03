@@ -1,7 +1,7 @@
 package com.example.form;
 
 /**
- * Commentのフォーム.
+ * コメント投稿のフォーム.
  * 
  * @author knmrmst
  *

@@ -1,7 +1,7 @@
 package com.example.form;
 
 /**
- * Articleのフォーム.
+ * 記事投稿のフォーム.
  * 
  * @author knmrmst
  *

@@ -26,9 +26,9 @@ import com.example.repository.CommentRepository;
 @RequestMapping("/article")
 public class ArticleController {
 	@Autowired
-	ArticleRepository articleRepository;
+	private ArticleRepository articleRepository;
 	@Autowired
-	CommentRepository commentRepository;
+	private CommentRepository commentRepository;
 
 	@ModelAttribute
 	public ArticleForm setUpArticleForm() {
@@ -55,7 +55,7 @@ public class ArticleController {
 			article.setCommentList(commentList);
 		}
 
-		System.out.println(articleList);
+		
 		model.addAttribute("articleList", articleList);
 
 		return "article";
@@ -83,18 +83,25 @@ public class ArticleController {
 	 */
 	@RequestMapping("/insertComment")
 	public String insertComment(CommentForm commentForm) {
+		System.out.println(commentForm);
 		Comment comment = new Comment();
 		BeanUtils.copyProperties(commentForm, comment);
 		comment.setArticleId(Integer.parseInt(commentForm.getArticleId()));
-		System.out.println(comment);
 		commentRepository.insertComment(comment);
 		return "redirect:/article";
 	}
 	
+	/**
+	 * 投稿情報とコメントの削除機能.
+	 * 
+	 * @param articleId　投稿ID
+	 * @return　記事一覧画面へのリダイレクト
+	 */
 	@RequestMapping("/deleteArticle")
 	public String deleteArticle(Integer articleId) {
-		articleRepository.deleteById(articleId);
+		System.out.println("articleId");
 		commentRepository.deleteByArticleId(articleId);
+		articleRepository.deleteById(articleId);
 		return "redirect:/article";
 	}
 }

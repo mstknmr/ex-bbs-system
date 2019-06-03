@@ -9,9 +9,9 @@
 <body>
 	<h1>掲示板アプリケーション</h1>
 
-   <form  action="article.html" th:action="@{/article/insertArticle}" method="post" >
-       投稿者名：<input type="text" name="name" > <br>
-       投稿内容：<textarea name="content" rows="5" cols="30"></textarea> <br>
+   <form  action="article.html" th:action="@{/article/insertArticle}" method="post" th:object="${articleForm}">
+       投稿者名：<input type="text" name="name" th:field="*{name}"> <br>
+       投稿内容：<textarea name="content" rows="5" cols="30" th:field="*{content}"></textarea> <br>
        <input type="submit"  value="記事投稿">
      </form>
 
@@ -31,8 +31,10 @@
         <td th:text="${article.content}"></td>
       </tr>
     </table>
-		<a href="article.html" th:href="@{/article/deleteArticle}"><button type="button" name="button" >投稿削除</button></a>
-
+		<form th:action="@{/article/deleteArticle}" action="index.html" method="post">
+			<input type="hidden" name="articleId" th:value="${article.id}">
+			<input type="submit" value="投稿削除">
+		</form>
     <br>
     <table th:each="comment:${article.commentList}">
       <tr>
@@ -49,10 +51,10 @@
       </tr>
     </table>
     <br>
-     <form  action="index.html" th:action="@{/article/insertComment}"method="post">
-     コメント者名：<input type="text" name="name" > <br>
-     コメント内容： <textarea name="content" rows="5" cols="30"></textarea> <br>
-      <input type="hidden" name="articleId" value="" th:value="${article.id}">
+     <form  action="index.html" th:action="@{/article/insertComment}"method="post" th:object="${commentForm}">
+     コメント者名：<input type="text" name="name" th:field="*{name}"> <br>
+     コメント内容： <textarea name="content" th:field="*{content}" rows="5" cols="30"></textarea> <br>
+      <input type="hidden" name="articleId"  th:value="${article.id}">
 			<input type="submit"  value="コメント投稿">
     </form>
 
