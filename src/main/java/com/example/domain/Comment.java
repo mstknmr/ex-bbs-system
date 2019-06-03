@@ -1,9 +1,19 @@
 package com.example.domain;
 
+/**
+ * Commentのドメイン.
+ * 
+ * @author knmrmst
+ *
+ */
 public class Comment {
+	/** コメントID*/
 	private Integer id;
+	/** コメント者名*/
 	private String name;
+	/** コメント内容*/
 	private String content;
+	/** 投稿ID*/
 	private Integer articleId;
 
 	@Override

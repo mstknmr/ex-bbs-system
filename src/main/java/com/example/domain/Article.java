@@ -2,10 +2,20 @@ package com.example.domain;
 
 import java.util.List;
 
+/**
+ * Articleのドメイン.
+ * 
+ * @author knmrmst
+ *
+ */
 public class Article {
+	/** 投稿者ID*/
 	private Integer id;
+	/** 投稿者名*/
 	private String name;
+	/** 投稿内容*/
 	private String content;
+	/** コメント情報のリスト*/
 	private List<Comment> commentList;
 
 	@Override

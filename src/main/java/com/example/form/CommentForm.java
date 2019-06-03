@@ -1,8 +1,17 @@
 package com.example.form;
 
+/**
+ * Commentのフォーム.
+ * 
+ * @author knmrmst
+ *
+ */
 public class CommentForm {
+	/** 投稿ID*/
 	private String articleId;
+	/** コメント者名*/
 	private String name;
+	/** コメント内容*/
 	private String content;
 
 	@Override

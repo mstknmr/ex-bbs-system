@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -11,11 +12,20 @@ import org.springframework.stereotype.Repository;
 
 import com.example.domain.Comment;
 
+/**
+ * Commentのリポジトリ.
+ * 
+ * @author knmrmst
+ *
+ */
 @Repository
 public class CommentRepository {
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 	
+	/**
+	 * CommentのRowMapper.
+	 */
 	private RowMapper<Comment> COMMENT_ROW_MAPPER=(rs,i)->{
 		Comment comment = new Comment();
 		comment.setId(rs.getInt("id"));
@@ -25,10 +35,28 @@ public class CommentRepository {
 		return comment;
 	};
 	
-	public List<Comment> findByArticleId(Integer id){
+	/**
+	 * commentを投稿者IDで検索する.
+	 * 
+	 * @param articleId 投稿者ID
+	 * @return コメント情報のリスト
+	 */
+	public List<Comment> findByArticleId(Integer articleId){
 		String findByArticleIdSql = "SELECT id,name,content,article_id FROM comments WHERE article_id = :id;";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("id",id);
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id",articleId);
 		List<Comment> commentList = template.query(findByArticleIdSql, param,COMMENT_ROW_MAPPER);
 		return commentList;
+	}
+	
+	/**
+	 * コメント情報のデータベース登録.
+	 * 
+	 * @param comment コメント情報
+	 */
+	public void insertComment(Comment comment) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(comment);
+		String insertCommentSql = "INSERT INTO comments(name,content,article_id)VALUES(:name,:content,:articleId);";
+		
+		template.update(insertCommentSql, param);
 	}
 }
