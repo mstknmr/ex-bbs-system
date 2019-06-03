@@ -3,5 +3,5 @@ SELECT id,name,content,article_id FROM comments;
 
 SELECT
 a.id as article_id,a.name as article_name,a.content as article_content,
-c.id as comment_id,c.name as comment_name,c.content as comment_conetnt
-FROM articles a join comments c on c.article_id=a.id;
+c.id as comment_id,c.name as comment_name,c.content as comment_conetnt,c.article_id
+FROM articles a left outer join comments c on c.article_id=a.id;

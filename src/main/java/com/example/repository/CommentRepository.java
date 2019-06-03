@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.example.domain.Comment;
 
 /**
- * Commentのリポジトリ.
+ * コメント投稿のリポジトリ.
  * 
  * @author knmrmst
  *

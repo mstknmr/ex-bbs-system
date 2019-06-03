@@ -13,11 +13,10 @@ import com.example.domain.Article;
 import com.example.domain.Comment;
 import com.example.form.ArticleForm;
 import com.example.form.CommentForm;
-import com.example.repository.ArticleRepository;
-import com.example.repository.CommentRepository;
+import com.example.service.ArticleService;
 
 /**
- * articleのコントローラ.
+ * 掲示板のコントローラ.
  * 
  * @author knmrmst
  *
@@ -26,9 +25,7 @@ import com.example.repository.CommentRepository;
 @RequestMapping("/article")
 public class ArticleController {
 	@Autowired
-	private ArticleRepository articleRepository;
-	@Autowired
-	private CommentRepository commentRepository;
+	ArticleService articleService;
 
 	@ModelAttribute
 	public ArticleForm setUpArticleForm() {
@@ -48,10 +45,10 @@ public class ArticleController {
 	 */
 	@RequestMapping("")
 	public String index(Model model) {
-		List<Article> articleList = articleRepository.findAll();
+		List<Article> articleList = articleService.findAll();
 
 		for (Article article : articleList) {
-			List<Comment> commentList = commentRepository.findByArticleId(article.getId());
+			List<Comment> commentList = articleService.findByArticleId(article.getId());
 			article.setCommentList(commentList);
 		}
 
@@ -71,7 +68,7 @@ public class ArticleController {
 	public String insertArticle(ArticleForm articleForm) {
 		Article article = new Article();
 		BeanUtils.copyProperties(articleForm, article);
-		articleRepository.insertArticle(article);
+		articleService.insertArticle(article);
 		return "redirect:/article";
 	}
 
@@ -87,7 +84,7 @@ public class ArticleController {
 		Comment comment = new Comment();
 		BeanUtils.copyProperties(commentForm, comment);
 		comment.setArticleId(Integer.parseInt(commentForm.getArticleId()));
-		commentRepository.insertComment(comment);
+		articleService.insertComment(comment);
 		return "redirect:/article";
 	}
 	
@@ -99,9 +96,8 @@ public class ArticleController {
 	 */
 	@RequestMapping("/deleteArticle")
 	public String deleteArticle(Integer articleId) {
-		System.out.println("articleId");
-		commentRepository.deleteByArticleId(articleId);
-		articleRepository.deleteById(articleId);
+		
+		articleService.deleteByArticleId(articleId);
 		return "redirect:/article";
 	}
 }

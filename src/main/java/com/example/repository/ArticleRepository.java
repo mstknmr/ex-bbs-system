@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.example.domain.Article;
 
 /**
- * articleのリポジトリ.
+ * 記事投稿のリポジトリ.
  * @author knmrmst
  *
  */
