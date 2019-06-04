@@ -78,14 +78,21 @@ public class ArticleController {
 		return "redirect:/article";
 	}
 
+	
 	/**
-	 * コメント情報のデータベース登録.
+	 *  * コメント情報のデータベース登録.
 	 * 
 	 * @param commentForm フォーム
+	 * @param result エラーが格納されるバインディングリザルト
+	 * @param model　モデル
 	 * @return 記事一覧画面へのリダイレクト
 	 */
 	@RequestMapping("/insertComment")
-	public String insertComment(CommentForm commentForm) {
+	public String insertComment(@Validated CommentForm commentForm,BindingResult result,Model model) {
+		if(result.hasErrors()) {
+			model.addAttribute("errPoint", commentForm.getArticleId());
+			return index(model);
+		}
 		System.out.println(commentForm);
 		Comment comment = new Comment();
 		BeanUtils.copyProperties(commentForm, comment);

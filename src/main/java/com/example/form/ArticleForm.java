@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 public class ArticleForm {
 	/** 投稿者名*/
 	@NotBlank(message="名前を入力してください")
-	@Size(min=1,max=127,message="名前は１〜５０文字で入力してください")
+	@Size(min=1,max=50,message="名前は１〜５０文字で入力してください")
 	private String name;
 	/** 投稿内容*/
 	@NotBlank(message="投稿内容を入力してください")

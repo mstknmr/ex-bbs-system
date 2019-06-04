@@ -2,15 +2,17 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
 </head>
 
 <body>
 	<h1>掲示板アプリケーション</h1>
 
-   <form  action="article.html" th:action="@{/article/insertArticle}" method="post" th:object="${articleForm}">
+	<form action="article.html" th:action="@{/article/insertArticle}" method="post" th:object="${articleForm}">
+		<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red">err</div>
        投稿者名：<input type="text" name="name" th:field="*{name}"> <br>
+       <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}" style="color:red">err</div>
        投稿内容：<textarea name="content" rows="5" cols="30" th:field="*{content}"></textarea> <br>
        <input type="submit"  value="記事投稿">
      </form>
@@ -52,8 +54,16 @@
     </table>
     <br>
      <form  action="index.html" th:action="@{/article/insertComment}"method="post" th:object="${commentForm}">
-     コメント者名：<input type="text" name="name" th:field="*{name}"> <br>
-     コメント内容： <textarea name="content" th:field="*{content}" rows="5" cols="30"></textarea> <br>
+     <div th:if="${article.id}==${errPoint}" >
+     	<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red">err</div>
+     	コメント者名：<input type="text" name="name" th:if="${article.id}==${errPoint}"  th:field="*{name}"> <br>
+     	<div th:if="${#fields.hasErrors('content')}" th:errors="*{content}" style="color:red">err</div>
+     	コメント内容： <textarea name="content" th:field="*{content}" rows="5" cols="30"></textarea> <br>
+     </div>
+		<div th:if="${article.id}!=${errPoint}" >
+     	コメント者名：<input type="text" name="name"  > <br>
+     	コメント内容： <textarea name="content" rows="5" cols="30"></textarea> <br>
+     </div>
       <input type="hidden" name="articleId"  th:value="${article.id}">
 			<input type="submit"  value="コメント投稿">
     </form>
