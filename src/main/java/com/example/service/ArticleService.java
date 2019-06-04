@@ -103,14 +103,14 @@ public class ArticleService {
 			if (articleMap.containsKey(articleAndComment.getId())) {
 				article = articleMap.get(articleAndComment.getId());
 				commentList = article.getCommentList();
-				commentList.add(0, ArticleAndCommentForComment(articleAndComment));
+				commentList.add(0, articleAndCommentForComment(articleAndComment));
 				article.setCommentList(commentList);
 				articleMap.put(articleAndComment.getId(), article);
 				
 			} else {
 				BeanUtils.copyProperties(articleAndComment, article);
 				if (articleAndComment.getCommentId() != 0) {
-					commentList.add(0, ArticleAndCommentForComment(articleAndComment));
+					commentList.add(0, articleAndCommentForComment(articleAndComment));
 					article.setCommentList(commentList);
 				}
 				articleMap.put(articleAndComment.getId(), article);
@@ -126,7 +126,7 @@ public class ArticleService {
 	 * @param articleAndComment 投稿とコメントが結合された情報
 	 * @return　コメントの情報
 	 */
-	private static Comment ArticleAndCommentForComment(ArticleAndComment articleAndComment) {
+	private static Comment articleAndCommentForComment(ArticleAndComment articleAndComment) {
 
 		Comment comment = new Comment();
 		comment.setId(articleAndComment.getCommentId());

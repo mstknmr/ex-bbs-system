@@ -1,5 +1,11 @@
 package com.example.domain;
 
+/**
+ * 投稿情報とコメント情報のドメイン.
+ * 
+ * @author knmrmst
+ *
+ */
 public class ArticleAndComment {
 	/** 投稿者ID*/
 	private Integer id;

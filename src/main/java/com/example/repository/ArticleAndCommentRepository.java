@@ -19,7 +19,7 @@ import com.example.domain.ArticleAndComment;
 public class ArticleAndCommentRepository {
 	
 	@Autowired
-	NamedParameterJdbcTemplate template;
+	private NamedParameterJdbcTemplate template;
 	
 	/**
 	 * 投稿とコメントのRowMapper

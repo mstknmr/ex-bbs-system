@@ -1,11 +1,13 @@
 package com.example.controller;
 
-import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -45,16 +47,18 @@ public class ArticleController {
 	 */
 	@RequestMapping("")
 	public String index(Model model) {
-		LinkedHashMap<Integer,Article> articleMap = articleService.findAllArticleJoinComment();
-		model.addAttribute("articleMap", articleMap);
-
-		return "article";
-//		List<Article> articleList = articleService.findAll();
-//		for (Article article : articleList) {
+//		LinkedHashMap<Integer,Article> articleMap = articleService.findAllArticleJoinComment();
+//		model.addAttribute("articleMap", articleMap);
+//
+//		return "article";
+		List<Article> articleList = articleService.findAll();
+		for (Article article : articleList) {
+			System.out.println(article);
 //			List<Comment> commentList = articleService.findByArticleId(article.getId());
 //			article.setCommentList(commentList);
-//		}
-//		model.addAttribute("articleList", articleList);
+		}
+		model.addAttribute("articleList", articleList);
+		return "article";
 	}
 
 	/**
@@ -64,7 +68,10 @@ public class ArticleController {
 	 * @return 記事一覧画面へのリダイレクト
 	 */
 	@RequestMapping("/insertArticle")
-	public String insertArticle(ArticleForm articleForm) {
+	public String insertArticle(@Validated ArticleForm articleForm,BindingResult result,Model model) {
+		if(result.hasErrors()) {
+			return index(model);
+		}
 		Article article = new Article();
 		BeanUtils.copyProperties(articleForm, article);
 		articleService.insertArticle(article);
