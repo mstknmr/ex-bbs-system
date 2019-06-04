@@ -56,6 +56,11 @@ public class ArticleRepository {
 		template.update(insertArticleSql, param);
 	}
 	
+	/**
+	 * 投稿情報の削除.
+	 * 
+	 * @param id 投稿ID
+	 */
 	public void deleteById(Integer id) {
 		System.out.println("delteByIdが呼び出されました");
 		String deleteByIdSql="DELETE FROM articles WHERE id=:id;";

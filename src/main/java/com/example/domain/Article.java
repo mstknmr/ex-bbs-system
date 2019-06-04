@@ -8,6 +8,7 @@ import java.util.List;
  * @author knmrmst
  *
  */
+
 public class Article {
 	/** 投稿者ID*/
 	private Integer id;

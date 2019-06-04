@@ -15,28 +15,28 @@
        <input type="submit"  value="記事投稿">
      </form>
 
-  <div th:each="article:${articleList}">
+  <div th:each="article:${articleMap}">
   <hr>
     <table>
       <tr>
         <td>投稿ID</td>
-        <td th:text="${article.id}"></td>
+        <td th:text="${article.value.id}"></td>
       </tr>
       <tr>
         <td>投稿者名</td>
-        <td th:text="${article.name}"></td>
+        <td th:text="${article.value.name}"></td>
       </tr>
       <tr>
         <td>投稿内容</td>
-        <td th:text="${article.content}"></td>
+        <td th:text="${article.value.content}"></td>
       </tr>
     </table>
 		<form th:action="@{/article/deleteArticle}" action="index.html" method="post">
-			<input type="hidden" name="articleId" th:value="${article.id}">
+			<input type="hidden" name="articleId" th:value="${article.value.id}">
 			<input type="submit" value="投稿削除">
 		</form>
     <br>
-    <table th:each="comment:${article.commentList}">
+    <table th:each="comment:${article.value.commentList}" >
       <tr>
         <td>コメントID</td>
         <td th:text="${comment.id}"></td>
@@ -54,7 +54,7 @@
      <form  action="index.html" th:action="@{/article/insertComment}"method="post" th:object="${commentForm}">
      コメント者名：<input type="text" name="name" th:field="*{name}"> <br>
      コメント内容： <textarea name="content" th:field="*{content}" rows="5" cols="30"></textarea> <br>
-      <input type="hidden" name="articleId"  th:value="${article.id}">
+      <input type="hidden" name="articleId"  th:value="${article.value.id}">
 			<input type="submit"  value="コメント投稿">
     </form>
 

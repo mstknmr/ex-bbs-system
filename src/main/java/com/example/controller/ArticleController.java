@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import java.util.List;
+import java.util.LinkedHashMap;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,17 +45,16 @@ public class ArticleController {
 	 */
 	@RequestMapping("")
 	public String index(Model model) {
-		List<Article> articleList = articleService.findAll();
-
-		for (Article article : articleList) {
-			List<Comment> commentList = articleService.findByArticleId(article.getId());
-			article.setCommentList(commentList);
-		}
-
-		
-		model.addAttribute("articleList", articleList);
+		LinkedHashMap<Integer,Article> articleMap = articleService.findAllArticleJoinComment();
+		model.addAttribute("articleMap", articleMap);
 
 		return "article";
+//		List<Article> articleList = articleService.findAll();
+//		for (Article article : articleList) {
+//			List<Comment> commentList = articleService.findByArticleId(article.getId());
+//			article.setCommentList(commentList);
+//		}
+//		model.addAttribute("articleList", articleList);
 	}
 
 	/**
@@ -87,16 +86,16 @@ public class ArticleController {
 		articleService.insertComment(comment);
 		return "redirect:/article";
 	}
-	
+
 	/**
 	 * 投稿情報とコメントの削除機能.
 	 * 
-	 * @param articleId　投稿ID
-	 * @return　記事一覧画面へのリダイレクト
+	 * @param articleId 投稿ID
+	 * @return 記事一覧画面へのリダイレクト
 	 */
 	@RequestMapping("/deleteArticle")
 	public String deleteArticle(Integer articleId) {
-		
+
 		articleService.deleteByArticleId(articleId);
 		return "redirect:/article";
 	}
